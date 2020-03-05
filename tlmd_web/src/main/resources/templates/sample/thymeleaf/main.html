@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layouts/layout_base}">
+<head>
+<title>Thymeleaf Tutorial</title>
+<!-- 페이지의 고유 CSS -->
+<th:block layout:fragment="css">
+</th:block>
+<!-- 페이지의 고유 스크립트 링크 -->
+<th:block layout:fragment="script_link">
+</th:block>
+</head>
+
+<body>
+<div class="w3-main" style="margin-left:250px;">
+<th:block layout:fragment="content" >
+	<div class="w3-row w3-padding-64 w3-container">
+		<h1 th:text="#{sample.welcome}">Welcome to Thymeleaf Tutorial!</h1>
+		<p>다국어 파일은 src/main/resources/i18n 폴더 아래에 messages_{언어코드}.properties</p>
+	</div>
+	<div class="w3-row w3-container">
+		<p>escaped serverTime: <span th:text="${serverTime}">serverTime</span></p>
+		<p>unescaped serverTime: <span th:utext="${serverTime}">serverTime</span></p>
+		<ul>
+	  		<li>key_x=<span th:text="${key_x}">key_x</span> 
+	  			<br>: ${key_x} will return a variable key_x stored into the Thymeleaf context or as a request attribute.</li>
+			<li>key_x=<span th:text="${param.key_x}">key_x</span> 
+				<br>: ${param.key_x} will return a request parameter called key_x (which might be multivalued).</li>
+			<li>key_x=<span th:text="${session.key_x}">key_x</span> 
+				<br>: ${session.key_x} will return a session attribute called key_x.</li>
+			<li>key_x=<span th:text="${application.key_x}">key_x</span> 
+				<br>: ${application.key_x} will return a servlet context attribute called key_x.</li>
+	  	</ul>
+	</div>
+	<div class="w3-row w3-padding-64 w3-container">
+		<h1>session info</h1>
+	  	<div th:if="${httpSession}" th:object="${httpSession}">
+		    <p>httpSession.id = <span th:text="*{id}"></span></p>
+		    <p>httpSession.creationTime = <span th:text="*{creationTime}"></span></p>
+		    <p>httpSession.lastAccessedTime = <span th:text="*{lastAccessedTime}"></span></p>
+		    <p>httpSession.maxInactiveInterval = <span th:text="*{maxInactiveInterval}"></span></p>
+		    <ul th:each="attr : *{attrs}">
+		    	<li th:text="${attr}">attribute</li>
+		    </ul>
+	  	</div>
+	  	<div th:unless="${httpSession}">
+		    <p>HttpSession is null</p>
+	  	</div>
+	</div>
+</th:block>
+</div>
+
+<th:block layout:fragment="script_src">
+<!--/* 페이지의 고유 스크립트 소스(타임리프 처리되면 사라지는 주석)  */-->
+<script type="text/javascript" th:inline="javascript">
+console.log('hi javascript src.');
+</script>
+</th:block>
+
+</body>
+</html>

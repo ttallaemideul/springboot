@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:fragment="configFragment">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title layout:title-pattern="$CONTENT_TITLE :: $DECORATOR_TITLE">Powered By TtalLaeMiDeul</title>
+    <!-- 공통 css -->
+	<link rel="stylesheet" th:href="@{/assets/w3.css}">
+	<link rel="stylesheet" th:href="@{/assets/w3-theme-black.css}">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+	html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
+	.w3-sidebar {
+	  z-index: 3;
+	  width: 250px;
+	  top: 43px;
+	  bottom: 0;
+	  height: inherit;
+	}
+	</style>
+	<!-- favicon -->
+	<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+	<link rel="manifest" href="/assets/site.webmanifest">
+
+    <th:block layout:fragment="css">
+    <!-- 페이지의 고유 CSS -->
+    </th:block>
+    
+    <!-- 공통 스크립트 -->
+    <script th:src="@{/assets/jquery-3.4.1.min.js}"></script>
+    
+    <th:block layout:fragment="script_link">
+    <!-- 페이지의 고유 스크립트 링크 -->
+    </th:block>
+</head>
+
+</html>
