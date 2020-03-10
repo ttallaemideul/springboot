@@ -22,12 +22,14 @@
 		<div class="w3-responsive">
 			<table class="w3-table-all">
 				<tr>
+					<th>USERID</th>
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Email</th>
 					<th>Reg. date</th>
 				</tr>
 				<tr th:each="user : ${users}">
+				  <td th:text="${user.USERID}">USERID</td>
 				  <td th:text="${user.FIRST_NAME}">first_name</td>
 				  <td th:text="${user.LAST_NAME}">last_name</td>
 				  <td th:text="${user.EMAIL}">email</td>

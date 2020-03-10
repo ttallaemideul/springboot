@@ -54,7 +54,10 @@
 <th:block layout:fragment="script_src">
 <!--/* 페이지의 고유 스크립트 소스(타임리프 처리되면 사라지는 주석)  */-->
 <script type="text/javascript" th:inline="javascript">
-console.log('hi javascript src.');
+
+console.log('hi session.id', /*[[${httpSession.id}]]*/ 'id');
+var session = /*[[${httpSession}]]*/ null;
+console.log('session', session);
 </script>
 </th:block>
 

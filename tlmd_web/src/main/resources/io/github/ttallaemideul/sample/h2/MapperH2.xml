@@ -10,7 +10,7 @@
 	<select id="getUsers" resultType="map">
 	/* io.github.ttallaemideul.sample.h2.H2MapperH2.getUsers */
 		SELECT
-		FIRST_NAME, LAST_NAME, EMAIL, REG_DT
+		USERID, FIRST_NAME, LAST_NAME, EMAIL, REG_DT
 		FROM USERS
 	</select>
 </mapper>
