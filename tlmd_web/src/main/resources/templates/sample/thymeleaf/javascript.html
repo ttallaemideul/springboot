@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layouts/layout_base}">
+<head>
+<title>Thymeleaf Javascript inlining</title>
+<!-- 페이지의 고유 CSS -->
+<th:block layout:fragment="css">
+</th:block>
+<!-- 페이지의 고유 스크립트 링크 -->
+<th:block layout:fragment="script_link">
+</th:block>
+</head>
+
+<body>
+<div class="w3-main" style="margin-left:250px;">
+<th:block layout:fragment="content" >
+	<div class="w3-row w3-padding-64 w3-container">
+		<h1 class="w3-text-teal" th:text="#{js.title}">타임리프 자바스크립트  인라인 이용하기</h1>
+		<p>자바스크립트에서 타임리프 태그를 사용하기 위해서는 <b>th:inline="javascript"</b>를 적용하여 사용한다.</p>
+		<div class="w3-responsive">
+<pre style="color:#000000;background:#ffffff;"><span style="color:#808030; ">&lt;</span>script type<span style="color:#808030; ">=</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">text/javascript</span><span style="color:#800000; ">"</span> th<span style="color:#800080; ">:</span><span style="color:#800000; font-weight:bold; ">inline</span><span style="color:#808030; ">=</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">javascript</span><span style="color:#800000; ">"</span><span style="color:#808030; ">&gt;</span>
+</pre>
+		</div>
+		<p>인라인을 종료하여 타임리프 태그가 작동되지 않도록 하려면 <b>th:inline="none"</b>을 이용한다.</p>
+	</div>
+	<div class="w3-row w3-container">
+		<h2>모델 객체를 자동으로 json 객체로 변환</h2>
+		<p th:inline="none"><b>[[${session}]]</b>로 객체를 호출하면 타임리프가 자동으로 json 객체로 변환하여 준다.
+		</p>
+		<p th:inline="none">아래 샘플에서 <b>/*[[${session}]]*/</b>를 이용하는 것과 <b>[[${session}]]</b>를 이용하는 것의 차이는 
+			session2 선언부는 자바스크립트 문법을 깨트리기 때문에 소스 html 파일을 웹브라우저에서 바로 오픈하면 스크립트가 실행되지 않는다.
+		</p>
+		<div class="w3-responsive" th:inline="none">
+<pre style="color:#000000;background:#ffffff;"><span style="color:#800000; font-weight:bold; ">var</span> session1 <span style="color:#808030; ">=</span> <span style="color:#696969; ">/*[[${session}]]*/</span> <span style="color:#0f4d75; ">null</span><span style="color:#800080; ">;</span>
+<span style="color:#800000; font-weight:bold; ">var</span> session2 <span style="color:#808030; ">=</span> <span style="color:#808030; ">[</span><span style="color:#808030; ">[</span>$<span style="color:#800080; ">{</span>session<span style="color:#800080; ">}</span><span style="color:#808030; ">]</span><span style="color:#808030; ">]</span><span style="color:#800080; ">;</span>
+</pre>
+		</div>
+		<p th:inline="none"><b>/*[[${...}]]*/</b> 형식은 자바스크립 문법상 주석에 해당하기 때문에 문제가 없다. 
+			웹브라우저에서 바로 오픈하면 다음과 같은 코드로 해석될 것이다.
+		</p>
+		<div class="w3-responsive" th:inline="none">
+<pre style="color:#000000;background:#ffffff;"><span style="color:#800000; font-weight:bold; ">var</span> session <span style="color:#808030; ">=</span>  <span style="color:#0f4d75; ">null</span><span style="color:#800080; ">;</span>
+</pre>
+		</div>
+		<p>웹서버에서 실행되어 타임리프가 <b>${session}</b>을 자동으로 json 객체로 변화하면 다음과 같은 코드가 생성된다.
+		</p>
+		<div class="w3-responsive" th:inline="none">
+<pre style="color:#000000;background:#ffffff;"><span style="color:#800000; font-weight:bold; ">var</span> session <span style="color:#808030; ">=</span> <span style="color:#800080; ">{</span><span style="color:#800000; ">"</span><span style="color:#0f69ff; ">\uC601</span><span style="color:#0f69ff; ">\uC5B4</span><span style="color:#0f69ff; ">\uC774</span><span style="color:#0f69ff; ">\uB984</span><span style="color:#800000; ">"</span><span style="color:#800080; ">:</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">TtalLaeMideul</span><span style="color:#800000; ">"</span><span style="color:#808030; ">,</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">name</span><span style="color:#800000; ">"</span><span style="color:#800080; ">:</span><span style="color:#800000; ">"</span><span style="color:#0f69ff; ">\uB538</span><span style="color:#0f69ff; ">\uB0B4</span><span style="color:#0f69ff; ">\uBBF8</span><span style="color:#0f69ff; ">\uB4E4</span><span style="color:#800000; ">"</span><span style="color:#808030; ">,</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">key_x</span><span style="color:#800000; ">"</span><span style="color:#800080; ">:</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">from session</span><span style="color:#800000; ">"</span><span style="color:#800080; ">}</span><span style="color:#800080; ">;</span>
+</pre>
+		</div>
+	</div>
+	<div class="w3-row w3-padding-64 w3-container">
+		<h2>자바스크립트 내에서 타임리프 태그 이용하기</h2>
+		<p><b>[# th:...]</b>로 시작하여 <b>[/]</b>로 닫힌 내부에서 타임리프 태그를 이용할 수 있다.
+		</p>
+		<p>아래 소스는 <b>${DEBUG_MODE}</b>의 값이 <b>true</b>이면 로그를 찍는 코드이다.
+		</p>
+		<div class="w3-responsive" th:inline="none">
+<pre style="color:#000000;background:#ffffff;"><span style="color:#808030; ">&lt;</span>script type<span style="color:#808030; ">=</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">text/javascript</span><span style="color:#800000; ">"</span> th<span style="color:#800080; ">:</span>inline<span style="color:#808030; ">=</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">javascript</span><span style="color:#800000; ">"</span><span style="color:#808030; ">&gt;</span>
+
+<span style="color:#800000; font-weight:bold; ">var</span> session <span style="color:#808030; ">=</span> <span style="color:#696969; ">/*[[${session}]]*/</span> <span style="color:#0f4d75; ">null</span><span style="color:#800080; ">;</span>
+<span style="color:#808030; ">[</span># th<span style="color:#800080; ">:</span><span style="color:#800000; font-weight:bold; ">if</span><span style="color:#808030; ">=</span><span style="color:#800000; ">"</span><span style="color:#0000e6; ">${DEBUG_MODE}</span><span style="color:#800000; ">"</span><span style="color:#808030; ">]</span>
+console<span style="color:#808030; ">.</span><span style="color:#800000; font-weight:bold; ">log</span><span style="color:#808030; ">(</span><span style="color:#800000; ">'</span><span style="color:#0000e6; ">session</span><span style="color:#800000; ">'</span><span style="color:#808030; ">,</span> session<span style="color:#808030; ">)</span><span style="color:#800080; ">;</span>
+<span style="color:#808030; ">[</span><span style="color:#800000; ">/</span><span style="color:#0000e6; ">]</span>
+<span style="color:#0000e6; ">&lt;</span><span style="color:#800000; ">/</span>script<span style="color:#808030; ">&gt;</span>
+</pre>
+		</div>
+	</div>
+</th:block>
+</div>
+
+<th:block layout:fragment="script_src">
+<!--/* 페이지의 고유 스크립트 소스(타임리프 처리되면 사라지는 주석)  */-->
+<script type="text/javascript" th:inline="javascript">
+
+var session = /*[[${session}]]*/ null;
+[# th:if="${DEBUG_MODE}"]
+console.log('session', session);
+[/]
+</script>
+</th:block>
+
+</body>
+</html>

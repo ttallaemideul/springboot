@@ -26,11 +26,19 @@ public class ThymeleafController extends BaseController {
 			httpSession.setAttribute("영어이름", "TtalLaeMideul");
 		}
 		model.addAttribute("httpSession", UtilServlet.getSessionInfo(httpSession));
+		if(log.isDebugEnabled()) {
+			log.debug("model={}",model);
+		}
 		return "sample/thymeleaf/main";
 	}
 	
 	@GetMapping("/basic_object")
 	public String basicObject(Model model) {
 		return "sample/thymeleaf/basic_object";
+	}
+	
+	@GetMapping("/javascript")
+	public String javascript(Model model) {
+		return "sample/thymeleaf/javascript";
 	}
 }

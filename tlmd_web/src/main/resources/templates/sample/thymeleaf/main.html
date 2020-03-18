@@ -16,10 +16,11 @@
 <div class="w3-main" style="margin-left:250px;">
 <th:block layout:fragment="content" >
 	<div class="w3-row w3-padding-64 w3-container">
-		<h1 th:text="#{sample.welcome}">Welcome to Thymeleaf Tutorial!</h1>
+		<h1 class="w3-text-teal" th:text="#{sample.welcome}">Welcome to Thymeleaf Tutorial!</h1>
 		<p>다국어 파일은 src/main/resources/i18n 폴더 아래에 messages_{언어코드}.properties</p>
 	</div>
 	<div class="w3-row w3-container">
+		<p>DEBUG_MODE=[[${DEBUG_MODE}]]</p>
 		<p>escaped serverTime: <span th:text="${serverTime}">serverTime</span></p>
 		<p>unescaped serverTime: <span th:utext="${serverTime}">serverTime</span></p>
 		<ul>
@@ -35,6 +36,11 @@
 	</div>
 	<div class="w3-row w3-padding-64 w3-container">
 		<h1>session info</h1>
+		<p><b>${session}</b>으로 세션 객체에 접근할 수 있다.</p>
+		<p>session.id=<span th:if="${session}" th:text="${session.id}">id</span></p>
+		<p><b>th:if="${obj}"</b>로 <b>obj</b>객체가 존재하면 실행되는 태그를 작성 할 수 있다.
+		 	<b>th:unless="${obj}"</b>은  <b>obj</b> 객체가 존재하지 않으면 실행되는 블럭을 작성할 수 있다.
+		</p>
 	  	<div th:if="${httpSession}" th:object="${httpSession}">
 		    <p>httpSession.id = <span th:text="*{id}"></span></p>
 		    <p>httpSession.creationTime = <span th:text="*{creationTime}"></span></p>
@@ -55,9 +61,11 @@
 <!--/* 페이지의 고유 스크립트 소스(타임리프 처리되면 사라지는 주석)  */-->
 <script type="text/javascript" th:inline="javascript">
 
-console.log('hi session.id', /*[[${httpSession.id}]]*/ 'id');
 var session = /*[[${httpSession}]]*/ null;
+[# th:if="${DEBUG_MODE}"]
+console.log('hi session.id', /*[[${httpSession.id}]]*/ 'id');
 console.log('session', session);
+[/]
 </script>
 </th:block>
 
