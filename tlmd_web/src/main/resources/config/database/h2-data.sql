@@ -4,3 +4,8 @@ insert into users (first_name, last_name, email) values
   ,('Captain', 'America', 'captain@marvel.com')
   ,('Ttallaemideul', 'Fafa', null)
   ;
+
+insert into user_role_mng (role, role_desc) values
+('USER', '사용자')
+,('ADMIN', '관리자')
+;
