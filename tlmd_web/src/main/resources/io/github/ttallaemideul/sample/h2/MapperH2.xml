@@ -3,14 +3,13 @@
 <mapper namespace="io.github.ttallaemideul.sample.h2.H2MapperH2">
 	
 	<select id="getServerNow" resultType="date">
-	/* io.github.ttallaemideul.sample.h2.MapperH2.getServerNow */
-		SELECT NOW()
+	SELECT 
+	NOW()
 	</select>
 	
 	<select id="getUsers" resultType="map">
-	/* io.github.ttallaemideul.sample.h2.H2MapperH2.getUsers */
-		SELECT
-		USERID, FIRST_NAME, LAST_NAME, EMAIL, REG_DT
-		FROM USERS
+	SELECT
+	USERID, FIRST_NAME, LAST_NAME, EMAIL, REG_DT
+	FROM USERS
 	</select>
 </mapper>

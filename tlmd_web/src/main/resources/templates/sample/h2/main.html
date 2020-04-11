@@ -29,11 +29,11 @@
 					<th>Reg. date</th>
 				</tr>
 				<tr th:each="user : ${users}">
-				  <td th:text="${user.USERID}">USERID</td>
-				  <td th:text="${user.FIRST_NAME}">first_name</td>
-				  <td th:text="${user.LAST_NAME}">last_name</td>
-				  <td th:text="${user.EMAIL}">email</td>
-				  <td th:text="${user.REG_DT}">reg_dt</td>
+				  <td th:text="${user.userid}">userid</td>
+				  <td th:text="${user.first_name}">first_name</td>
+				  <td th:text="${user.last_name}">last_name</td>
+				  <td th:text="${user.email}">email</td>
+				  <td th:text="${user.reg_dt}">reg_dt</td>
 				</tr>
 			</table>
 		</div>

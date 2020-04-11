@@ -1,40 +1,40 @@
-DROP SEQUENCE IF EXISTS SEQ6_1;
-CREATE SEQUENCE SEQ6_1
-	INCREMENT BY 1
-	MINVALUE 100000
-	MAXVALUE 900000
-	START 100000
-	CACHE 1
-	CYCLE
+drop sequence if exists seq6_1;
+create sequence seq6_1
+	increment by 1
+	minvalue 100000
+	maxvalue 900000
+	start 100000
+	cache 1
+	cycle
 ;
 
-DROP SEQUENCE IF EXISTS SEQ6_2;
-CREATE SEQUENCE SEQ6_2
-	INCREMENT BY 1
-	MINVALUE 100000
-	MAXVALUE 900000
-	START 200000
-	CACHE 1
-	CYCLE
+drop sequence if exists seq6_2;
+create sequence seq6_2
+	increment by 1
+	minvalue 100000
+	maxvalue 900000
+	start 200000
+	cache 1
+	cycle
 ;
 
-DROP SEQUENCE IF EXISTS SEQ6_3;
-CREATE SEQUENCE SEQ6_3
-	INCREMENT BY 1
-	MINVALUE 100000
-	MAXVALUE 900000
-	START 300000
-	CACHE 1
-	CYCLE
+drop sequence if exists seq6_3;
+create sequence seq6_3
+	increment by 1
+	minvalue 100000
+	maxvalue 900000
+	start 300000
+	cache 1
+	cycle
 ;
 
-DROP TABLE IF EXISTS USERS;
+drop table if exists users;
   
-CREATE TABLE USERS (
-  USERID VARCHAR(32) NOT NULL DEFAULT TO_CHAR(NOW(), 'YYYYMMDDHH24MISS') || NEXTVAL('SEQ6_1') || NEXTVAL('SEQ6_2') || NEXTVAL('SEQ6_3'),
-  FIRST_NAME VARCHAR(250) NOT NULL,
-  LAST_NAME VARCHAR(250) NOT NULL,
-  EMAIL VARCHAR(250) DEFAULT NULL,
-  REG_DT TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT USERS_PK PRIMARY KEY (USERID)
+create table users (
+  userid varchar(32) not null default to_char(now(), 'YYYYMMDDHH24MISS') || nextval('seq6_1') || nextval('seq6_2') || nextval('seq6_3'),
+  first_name varchar(250) not null,
+  last_name varchar(250) not null,
+  email varchar(250) default null,
+  reg_dt timestamp not null default current_timestamp,
+  constraint users_pk primary key (userid)
 );
