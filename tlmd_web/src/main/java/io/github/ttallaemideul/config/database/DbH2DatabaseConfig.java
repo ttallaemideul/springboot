@@ -27,7 +27,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * h2database mybatis 설정
+ * h2database 설정
  * @author TtalLaeMiDeul
  *
  */
