@@ -1,13 +1,23 @@
+/**
+ * 
+ */
 package io.github.ttallaemideul.auth.model;
 
-import java.io.Serializable;
+import org.springframework.security.core.GrantedAuthority;
 
 import lombok.Data;
 
 @Data
-public class UserRole implements Serializable {
+public class UserRole implements GrantedAuthority {
 	private static final long serialVersionUID = 1L;
 	
-	private String user_id;
-	private String role_id;
+	private String id;
+	private String role;
+	private String desc;
+	
+	@Override
+	public String getAuthority() {
+		return role;
+	}
+	
 }
