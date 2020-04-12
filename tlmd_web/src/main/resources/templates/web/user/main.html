@@ -22,17 +22,19 @@
 	    <div class="w3-responsive">
 			<table class="w3-table-all">
 				<tr>
-					<th>id</th>
-					<th>login_id</th>
-					<th>user_name</th>
-					<th>등록일시</th>
-					<th>수정일시</th>
+				  <td>로그인ID</td>
+				  <td th:text="${user.login_id}">login_id</td>
 				</tr>
 				<tr>
-				  <td th:text="${user.id}">user_id</td>
-				  <td th:text="${user.login_id}">login_id</td>
+				  <td>이름</td>
 				  <td th:text="${user.user_name}">user_name</td>
+				</tr>
+				<tr>
+				  <td>등록일시</td>
 				  <td th:text="${user.reg_dt}">reg_dt</td>
+				</tr>
+				<tr>
+				  <td>수정일시</td>
 				  <td th:text="${user.upd_dt}">upd_dt</td>
 				</tr>
 			</table>
