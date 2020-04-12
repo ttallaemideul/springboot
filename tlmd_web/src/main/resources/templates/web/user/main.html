@@ -18,7 +18,8 @@
 <th:block layout:fragment="content" >
 	<div class="w3-row w3-padding-64">
 	  <div class="w3-container">
-	    <h1>사용자 정보: <span sec:authentication="name">username</span></h1>
+	    <h1>사용자 정보</h1>
+	    <h2><span sec:authentication="principal.user.user_name">user_name</span>(<span sec:authentication="name">username</span>)</h2>
 	    <div class="w3-responsive">
 			<table class="w3-table-all">
 				<tr>
