@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class UserDetail implements UserDetails {
 	private static final long serialVersionUID = 1L;
-
+	private String user_id;
 	private User user;
 	private List<UserRole> roles;
 	

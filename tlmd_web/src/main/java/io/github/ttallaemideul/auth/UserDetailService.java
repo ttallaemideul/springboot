@@ -19,13 +19,9 @@ public class UserDetailService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserDetail ud = new UserDetail();
-		ud.setUser(userDetailMapperH2.loadUserByUsername(username));
-		if (Util.isEmpty(ud.getUser()))
+		UserDetail ud = userDetailMapperH2.loadUserByUsername(username);
+		if (Util.isEmpty(ud))
 			throw new UsernameNotFoundException("Invalid user!");
-		ud.setRoles(userDetailMapperH2.getUserRole(ud.getUser().getId()));
-		if (Util.isEmpty(ud.getAuthorities()))
-			throw new UsernameNotFoundException("Invalid role!");
 		log.debug("ud={}", ud);
 		return ud;
 	}
