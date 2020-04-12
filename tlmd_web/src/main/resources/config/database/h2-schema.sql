@@ -44,6 +44,7 @@ create table user_role_mng (
   role_id varchar(64) not null default hash('SHA256', to_char(now(), 'YYYYMMDDHH24MISS') || nextval('seq8_1') || nextval('seq8_2') || nextval('seq8_3')),
   role varchar(64) unique,
   role_desc varchar(255),
+  priority int not null default 999999,
   reg_dt timestamp not null default current_timestamp,
   constraint user_role_mng_pk primary key (role_id)
 );

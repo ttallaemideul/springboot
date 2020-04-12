@@ -27,22 +27,22 @@ public class UserDetail implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return user.getId();
+		return user.getLogin_id();
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return user.getExpired_yn()==1;
+		return user.getExpired_yn()==0;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return user.getLocked_yn()==1;
+		return user.getLocked_yn()==0;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return user.getPwd_expired_yn()==1;
+		return user.getPwd_expired_yn()==0;
 	}
 
 	@Override

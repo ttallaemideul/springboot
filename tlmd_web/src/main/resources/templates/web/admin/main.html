@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layouts/layout_base}">
+<head>
+<title>Admin</title>
+<!-- 페이지의 고유 CSS -->
+<th:block layout:fragment="css">
+</th:block>
+<!-- 페이지의 고유 스크립트 링크 -->
+<th:block layout:fragment="script_link">
+</th:block>
+</head>
+
+<body>
+<div class="w3-main" style="margin-left:250px;">
+<th:block layout:fragment="content" >
+	<div class="w3-row w3-padding-64">
+	  <div class="w3-container">
+	    <h1>Admin</h1>
+	  </div>
+	</div>
+	
+</th:block>
+</div>
+
+<th:block layout:fragment="script_src">
+<!--/* 페이지의 고유 스크립트 소스(타임리프 처리되면 사라지는 주석)  */-->
+</th:block>
+
+</body>
+</html>

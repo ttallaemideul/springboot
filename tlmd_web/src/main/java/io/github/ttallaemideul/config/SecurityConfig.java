@@ -5,7 +5,6 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -14,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.header.writers.frameoptions.WhiteListedAllowFromStrategy;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import io.github.ttallaemideul.auth.UserDetailService;
 
@@ -22,22 +22,17 @@ import io.github.ttallaemideul.auth.UserDetailService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-	@Autowired
 	private UserDetailService userDetailService;
 
 	@Bean
-	public DaoAuthenticationProvider daoAuthenticationProvider(UserDetailService userDetailsService) {
-		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-		daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-		daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder);
-		return daoAuthenticationProvider;
+	public BCryptPasswordEncoder passwordEncoder() {
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		return bCryptPasswordEncoder;
 	}
-
+	
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) {
-		auth.authenticationProvider(daoAuthenticationProvider(userDetailService));
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
 	}
 
 	@Override
@@ -45,35 +40,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests() //
 				.antMatchers("/admin/**").hasRole("ADMIN") //
 				.antMatchers("/user/**").hasRole("USER") //
-			.anyRequest() //
-				.permitAll() //
+			.anyRequest().permitAll()
 			//.and().csrf().disable() //
 			.and().csrf().ignoringAntMatchers("/h2-console/**")
-            .and()
-            .headers()
+            .and().headers() //
                 .addHeaderWriter(
                     new XFrameOptionsHeaderWriter(
                         new WhiteListedAllowFromStrategy(Arrays.asList("localhost"))
                     )
-                ).frameOptions().sameOrigin()
-                // h2-console 사용을 위해서 추가
-            .and()
-			.formLogin() //
-				.loginPage("/login")
-				.failureUrl("/login?error=true")
-				.defaultSuccessUrl("/")
+                ).frameOptions().sameOrigin() //h2-console 사용을 위해서 추가
+            .and().formLogin() //
+				.loginPage("/auth/login")
+				.failureUrl("/auth/login?error=true")
+				.defaultSuccessUrl("/user")
 				.usernameParameter("login_id")
-				.passwordParameter("pwd") 
-				//
-			.and() //
-				.logout()
-				.logoutUrl("/logout")
-				.invalidateHttpSession(true)
-				//
-			.and() //
-				.exceptionHandling()
-				.accessDeniedPage("/access-denied")
-				//
+				.passwordParameter("pwd") //
+			.and().logout() //
+				.logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
+	            .logoutSuccessUrl("/auth/login?logout=true")
+				.invalidateHttpSession(true) //
+			.and().exceptionHandling() //
+				.accessDeniedPage("/auth/access-denied")
 			;
 	}
 

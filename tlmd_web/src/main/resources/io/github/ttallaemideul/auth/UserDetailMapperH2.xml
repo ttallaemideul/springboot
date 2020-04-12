@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.ttallaemideul.auth.UserDetailMapperH2">
+	
+	<select id="loadUserByUsername" resultType="io.github.ttallaemideul.auth.model.User">
+	select
+		user_id as id
+		, active_yn
+		, expired_yn
+		, locked_yn
+		, pwd_expired_yn
+  		, login_id
+		, user_name
+		, pwd
+		, reg_dt
+		, upd_dt
+	from user
+	where login_id=#{login_id}
+	</select>
+	
+	<select id="getUserRole" resultType="io.github.ttallaemideul.auth.model.UserRole">
+	select
+	ur.role_id as id
+	, role
+	, role_desc desc
+	, priority
+	from user_role ur join user_role_mng urm using(role_id)
+	where ur.user_id=#{user_id}
+	order by priority
+	</select>
+</mapper>

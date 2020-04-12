@@ -14,6 +14,7 @@ public class UserRole implements GrantedAuthority {
 	private String id;
 	private String role;
 	private String desc;
+	private int priority;
 	
 	@Override
 	public String getAuthority() {
