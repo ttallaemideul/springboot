@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <!-- Navbar -->
 <div class="w3-top" th:fragment="navbarFragment">
   <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
     <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
     <a href="#" class="w3-bar-item w3-button w3-theme-l1" th:href="@{/}">TtalLaeMiDeul</a>
+    <th:block sec:authorize="hasRole('ADMIN')" >
+	    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white" th:href="@{/admin}">Admin</a>
+    </th:block>
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white" th:href="@{/sample/thymeleaf(key_x='from navbar')}">Thymeleaf samples</a>
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white" th:href="@{/sample/h2}">H2 samples</a>
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Link1</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Link2</a>
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Link3</a>
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white">Link4</a>
   </div>

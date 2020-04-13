@@ -15,5 +15,10 @@ public class UserRoleDto implements Serializable {
 	private String role;
 	private String desc;
 	private int priority;
+	
+	public String getRoleNm() {
+		if(role==null) return null;
+		return role.replaceFirst("ROLE_", "");
+	}
 
 }

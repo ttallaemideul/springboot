@@ -18,22 +18,19 @@
 	<div class="w3-row w3-padding-64">
 	  <div class="w3-container">
 	    <h1>Admin</h1>
-	  </div>
-	</div>
-	<div class="w3-row">
-	  <div class="w3-container">
-	    <h2>Uers</h2>
+	    <h2>사용자관리</h2>
 		<div class="w3-responsive">
 			<table class="w3-table-all">
 				<tr>
 					<th>아이디</th>
 					<th>이름</th>
-					<th>정상 여부</th>
-					<th>만료 여부</th>
-					<th>잠김 여부</th>
-					<th>암호만료 여부</th>
+					<th>정상</th>
+					<th>만료</th>
+					<th>잠김</th>
+					<th>암호만료</th>
 					<th>등록일</th>
 					<th>수정일</th>
+					<th>권한</th>
 				</tr>
 				<tr th:each="item : ${userList}">
 				  <td th:text="${item.user.login_id}">login_id</td>
@@ -44,6 +41,11 @@
 				  <td th:text="${item.user.pwd_expired_yn}">pwd_expired_yn</td>
 				  <td th:text="${item.user.reg_dt}">reg_dt</td>
 				  <td th:text="${item.user.upd_dt}">upd_dt</td>
+				  <td>
+				  	<span th:each="role : ${item.roles}">
+				  		[[${role.roleNm}]]<small th:text="|(${role.desc})|"></small><br>
+				  	</span>
+				  </td>
 				</tr>
 			</table>
 		</div>
