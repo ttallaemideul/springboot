@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layouts/layout_base}">
+<head>
+<title>Admin</title>
+<!-- 페이지의 고유 CSS -->
+<th:block layout:fragment="css">
+</th:block>
+<!-- 페이지의 고유 스크립트 링크 -->
+<th:block layout:fragment="script_link">
+</th:block>
+</head>
+
+<body>
+<div class="w3-main" style="margin-left:250px;">
+<th:block layout:fragment="content" >
+	<div class="w3-row w3-padding-64">
+	  <div class="w3-container">
+	    <h1>Admin</h1>
+	  </div>
+	</div>
+	<div class="w3-row">
+	  <div class="w3-container">
+	    <h2>Uers</h2>
+		<div class="w3-responsive">
+			<table class="w3-table-all">
+				<tr>
+					<th>아이디</th>
+					<th>이름</th>
+					<th>정상 여부</th>
+					<th>만료 여부</th>
+					<th>잠김 여부</th>
+					<th>암호만료 여부</th>
+					<th>등록일</th>
+					<th>수정일</th>
+				</tr>
+				<tr th:each="item : ${userList}">
+				  <td th:text="${item.user.login_id}">login_id</td>
+				  <td th:text="${item.user.user_name}">user_name</td>
+				  <td th:text="${item.user.active_yn}">active_yn</td>
+				  <td th:text="${item.user.expired_yn}">expired_yn</td>
+				  <td th:text="${item.user.locked_yn}">locked_yn</td>
+				  <td th:text="${item.user.pwd_expired_yn}">pwd_expired_yn</td>
+				  <td th:text="${item.user.reg_dt}">reg_dt</td>
+				  <td th:text="${item.user.upd_dt}">upd_dt</td>
+				</tr>
+			</table>
+		</div>
+	  </div>
+	</div>
+	
+</th:block>
+</div>
+
+<th:block layout:fragment="script_src">
+<!--/* 페이지의 고유 스크립트 소스(타임리프 처리되면 사라지는 주석)  */-->
+</th:block>
+
+</body>
+</html>

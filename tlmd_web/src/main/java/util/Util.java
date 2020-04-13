@@ -5,23 +5,27 @@ import java.util.Map;
 
 public class Util {
 	
-	public static boolean isEmpty(Object s) {
-		if (s == null) {
+	public static boolean isEmpty(Object o) {
+		if (o == null) {
 			return true;
 		}
-		if ((s instanceof String) && (((String) s).trim().length() == 0)) {
+		if ((o instanceof String) && (((String) o).trim().length() == 0)) {
 			return true;
 		}
-		if (s instanceof Map) {
-			return ((Map<?, ?>) s).isEmpty();
+		if (o instanceof Map) {
+			return ((Map<?, ?>) o).isEmpty();
 		}
-		if (s instanceof List) {
-			return ((List<?>) s).isEmpty();
+		if (o instanceof List) {
+			return ((List<?>) o).isEmpty();
 		}
-		if (s instanceof Object[]) {
-			return (((Object[]) s).length == 0);
+		if (o instanceof Object[]) {
+			return (((Object[]) o).length == 0);
 		}
 		return false;
+	}
+	
+	public static boolean isNotEmpty(Object o) {
+		return ! isEmpty(o);
 	}
 
 }
