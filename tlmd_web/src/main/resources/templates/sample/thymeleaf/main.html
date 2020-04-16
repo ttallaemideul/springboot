@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:hello="http://hello"
       layout:decorator="~{layouts/layout_base}">
 <head>
 <title>Thymeleaf Tutorial</title>
@@ -33,6 +34,9 @@
 			<li>key_x=<span th:text="${application.key_x}">key_x</span> 
 				<br>: ${application.key_x} will return a servlet context attribute called key_x.</li>
 	  	</ul>
+	</div>
+	<div class="w3-row w3-container">
+		<p hello:sayto="커스텀 dialect">Hi ya!</p>
 	</div>
 	<div class="w3-row w3-padding-64 w3-container">
 		<h1>session info</h1>
