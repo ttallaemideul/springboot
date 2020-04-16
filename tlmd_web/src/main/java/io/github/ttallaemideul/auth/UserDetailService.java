@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import io.github.ttallaemideul.auth.model.UserDetail;
 import lombok.extern.slf4j.Slf4j;
-import util.Util;
+import tlmd.Util;
 
 @Slf4j
 @Service
