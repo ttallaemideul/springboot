@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="~{layouts/layout_base}">
 <head>
-<title>Login</title>
+<title>Logout</title>
 <!-- 페이지의 고유 CSS -->
 <th:block layout:fragment="css">
 </th:block>
@@ -17,18 +17,11 @@
 <th:block layout:fragment="content" >
 	<div class="w3-row w3-padding-64">
 	  <div class="w3-container">
-	    <h1>로그인</h1>
-	    <p th:if="${param.error}" class="error">Wrong user or password</p>
-	    <p th:if="${param.logout}" class="info">로그아웃 되었습니다!</p>
-	    <form th:action="@{/auth/login}" method="post">
-	      <label for="login_id">Username</label>:
-	      <input type="text" id="login_id" name="login_id" autofocus="autofocus" /> <br />
-	      <label for="pwd">Password</label>:
-	      <input type="password" id="pwd" name="pwd" /> <br />
-	      <label for="autologin">자동로그인(2주간 유지)</label>:
-	      <input type="checkbox" id="autologin" name="autologin" /> <br />
-	      <input type="submit" value="Log in" />
-	    </form>
+	    <h1>Error! <span th:text="|(${status})|">status</span></h1>
+	    <h2 th:text="${error}">error</h2>
+	    <h3 th:text="${message}">message</h3>
+	    <h4 th:text="${exception}">exception</h4>
+	    <h4 th:text="${trace}">trace</h4>
 	  </div>
 	</div>
 	
@@ -37,6 +30,9 @@
 
 <th:block layout:fragment="script_src">
 <!--/* 페이지의 고유 스크립트 소스(타임리프 처리되면 사라지는 주석)  */-->
+<script type="text/javascript" th:inline="javascript">
+var status = /*[[${status}]]*/ null;
+</script>
 </th:block>
 
 </body>

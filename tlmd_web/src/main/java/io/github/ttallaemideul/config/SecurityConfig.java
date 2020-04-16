@@ -61,7 +61,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	            .logoutSuccessUrl("/auth/login?logout=true")
 				.invalidateHttpSession(true) //
 			.and().exceptionHandling() //
-				.accessDeniedPage("/auth/access-denied")
+				.accessDeniedPage("/auth/access-denied") //
+			.and().rememberMe() //
+				.rememberMeParameter("autologin") // 파라미터명
+				.rememberMeCookieName("autologin") // 쿠키명
+				.key("tlmd@github@2020")	// 토크생성 암호화키
+				.tokenValiditySeconds(3600*14)	// 유지기간 2주
 			;
 	}
 

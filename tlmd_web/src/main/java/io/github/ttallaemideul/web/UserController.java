@@ -17,9 +17,7 @@ public class UserController extends BaseController {
 
 	@GetMapping
 	public String main(Model model, Authentication auth) {
-		log.debug("details={}", auth.getDetails());
 		log.debug("principal={}", auth.getPrincipal());
-		log.debug("authorities={}", auth.getAuthorities());
 		model.addAttribute("user", ((UserDetail)auth.getPrincipal()).getUser());
 		return "web/user/main";
 	}

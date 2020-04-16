@@ -1,5 +1,6 @@
 package io.github.ttallaemideul.base;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,6 +13,15 @@ public class BaseController {
 
 	@Autowired
 	protected HttpSession httpSession;
+	
+	@Autowired
+	protected HttpServletRequest httpRequest;
+	
+	public ResultData getResultData() {
+		ResultData result = new ResultData();
+		result.setPath(httpRequest.getRequestURI());
+		return result;
+	}
 
 	/**
 	 * 호출된 컨트롤러의 디버그 모드를 리턴한다.
