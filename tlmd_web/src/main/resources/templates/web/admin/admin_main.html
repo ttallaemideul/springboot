@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:tlmd="https://ttallaemideul.github.io"
       layout:decorator="~{layouts/layout_base}">
 <head>
 <title>Admin</title>
@@ -35,10 +36,10 @@
 				<tr th:each="item : ${userList}">
 				  <td th:text="${item.user.login_id}">login_id</td>
 				  <td th:text="${item.user.user_name}">user_name</td>
-				  <td th:text="${item.user.active_yn}">active_yn</td>
-				  <td th:text="${item.user.expired_yn}">expired_yn</td>
-				  <td th:text="${item.user.locked_yn}">locked_yn</td>
-				  <td th:text="${item.user.pwd_expired_yn}">pwd_expired_yn</td>
+				  <td tlmd:ox="${item.user.active_yn}" class="test">active_yn</td>
+				  <td tlmd:ox="${item.user.expired_yn}">expired_yn</td>
+				  <td tlmd:ox="${item.user.locked_yn}">locked_yn</td>
+				  <td tlmd:ox="${item.user.pwd_expired_yn}">pwd_expired_yn</td>
 				  <td th:text="${item.user.reg_dt}">reg_dt</td>
 				  <td th:text="${item.user.upd_dt}">upd_dt</td>
 				  <td>

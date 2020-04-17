@@ -4,12 +4,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
 import io.github.ttallaemideul.sample.thymeleaf.HelloDialect;
+import io.github.ttallaemideul.thymeleaf.TlmdDialect;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Configuration
@@ -40,20 +42,39 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		return templateResolver;
 	}
 
+	/**
+	 * 타임리프 dialect 추가
+	 * @return
+	 */
 	@Bean
 	public SpringTemplateEngine templateEngine() {
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.setEnableSpringELCompiler(true); // Compiled SpringEL should speed up executions
 		templateEngine.setTemplateResolver(templateResolver());
-		templateEngine.addDialect(layoutDialect());
-		templateEngine.addDialect(new HelloDialect());
+		templateEngine.addDialect(layoutDialect());	// 레이아웃 관리
+		templateEngine.addDialect(springSecurityDialect());	// 스프링 시큐리티 dialect
+		templateEngine.addDialect(new HelloDialect()); // 샘플 dialect
+		templateEngine.addDialect(new TlmdDialect()); // tlmd dialect
 		return templateEngine;
 	}
 	
+	/**
+	 * 레이아웃 템플릿 처리 dialect (nz.net.ultraq.thymeleaf)
+	 * @return
+	 */
 	@Bean
 	public LayoutDialect layoutDialect() {
 		return new LayoutDialect();
 	}
+	
+	/**
+	 * spring-security thymeleaf dialect
+	 * @return
+	 */
+	@Bean
+    public SpringSecurityDialect springSecurityDialect(){
+        return new SpringSecurityDialect();
+    }
 
 	@Bean
 	public ThymeleafViewResolver viewResolver() {

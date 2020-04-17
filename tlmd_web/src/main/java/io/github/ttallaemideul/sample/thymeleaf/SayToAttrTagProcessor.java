@@ -15,13 +15,13 @@ public class SayToAttrTagProcessor extends AbstractAttributeTagProcessor {
 	protected SayToAttrTagProcessor(String dialectPrefix) {
 		super(
 				TemplateMode.HTML		// HTML 모드로 설정
-				, dialectPrefix						// 접두사
-				,null										// 태그명 미설정. 적용가능 태그명에 제약이 없다.
-				,false										// 태그명에 접두사를 적용하지 않는다.
-				,ATTR_NAME						// 적용될 속성명
-				,true										// 속성명에 dialect 접두사를 사용한다.
-				,PRECEDENCE					//  dialect 들 내에서 적용 우선권.
-				,true										// 적용한 속성명은 처리 후 삭제한다.
+				, dialectPrefix			// 접두사
+				,null					// 태그명 미설정. 적용가능 태그명에 제약이 없다.
+				,false					// 태그명에 접두사를 적용하지 않는다.
+				,ATTR_NAME				// 적용될 속성명
+				,true					// 속성명에 dialect 접두사를 사용한다.
+				,PRECEDENCE				// dialect 들 내에서 적용 우선권.
+				,true					// 적용한 속성명은 처리 후 삭제한다.
 		);
 	}
 

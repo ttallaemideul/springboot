@@ -4,8 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 public class Util {
-	
-	public static boolean isEmpty(Object o) {
+
+	/**
+	 * 파라미터 객체가 널이거나 빈 객체인지 판단. 문자열인 경우 공백으로만 되어 있으면 true 이다.
+	 * @param o
+	 * @return true: 널이거나 빈 객체일 때.
+	 */
+	public static boolean isEmpty(final Object o) {
 		if (o == null) {
 			return true;
 		}
@@ -23,9 +28,14 @@ public class Util {
 		}
 		return false;
 	}
-	
-	public static boolean isNotEmpty(Object o) {
-		return ! isEmpty(o);
+
+	/**
+	 * 파라미터 객체가 널이거나 빈 객체인지 판단. 문자열인 경우 공백으로만 되어 있으면 false 이다.
+	 * @param o
+	 * @return true: 널이 아니고 비어있지 않을 때.
+	 */
+	public static boolean isNotEmpty(final Object o) {
+		return !isEmpty(o);
 	}
 
 }
