@@ -51,31 +51,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.setEnableSpringELCompiler(true); // Compiled SpringEL should speed up executions
 		templateEngine.setTemplateResolver(templateResolver());
-		templateEngine.addDialect(layoutDialect());	// 레이아웃 관리
-		templateEngine.addDialect(springSecurityDialect());	// 스프링 시큐리티 dialect
+		templateEngine.addDialect(new LayoutDialect());	// 레이아웃 관리
+		templateEngine.addDialect(new SpringSecurityDialect());	// 스프링 시큐리티 dialect
 		templateEngine.addDialect(new HelloDialect()); // 샘플 dialect
 		templateEngine.addDialect(new TlmdDialect()); // tlmd dialect
 		return templateEngine;
 	}
 	
-	/**
-	 * 레이아웃 템플릿 처리 dialect (nz.net.ultraq.thymeleaf)
-	 * @return
-	 */
-	@Bean
-	public LayoutDialect layoutDialect() {
-		return new LayoutDialect();
-	}
 	
-	/**
-	 * spring-security thymeleaf dialect
-	 * @return
-	 */
-	@Bean
-    public SpringSecurityDialect springSecurityDialect(){
-        return new SpringSecurityDialect();
-    }
-
 	@Bean
 	public ThymeleafViewResolver viewResolver() {
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
