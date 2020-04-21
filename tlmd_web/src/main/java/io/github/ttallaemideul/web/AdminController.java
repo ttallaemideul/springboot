@@ -15,6 +15,7 @@ import io.github.ttallaemideul.base.BaseController;
 import io.github.ttallaemideul.base.ResultData;
 import io.github.ttallaemideul.config.SysProperty;
 import io.github.ttallaemideul.service.admin.AdminService;
+import io.github.ttallaemideul.utils.UtilString;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -26,10 +27,10 @@ public class AdminController extends BaseController {
 	private AdminService adminService;
 	
 	@GetMapping
-	public String main(Model model, @RequestParam(required = false, defaultValue = "0") int page //
-			, @RequestParam(required = false, defaultValue = "10") int rows) {
+	public String main(Model model, @RequestParam(required = false, defaultValue = "1") String page //
+			, @RequestParam(required = false, defaultValue = "10") String rows) {
 		Map<String, Object> param = new HashMap<>();
-		model.addAllAttributes(adminService.getUserList(page, rows, param));
+		model.addAllAttributes(adminService.getUserList(UtilString.parseInt(page,1), UtilString.parseInt(rows,10), param));
 		return "web/admin/admin_main";
 	}
 	

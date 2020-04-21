@@ -59,7 +59,7 @@
 		<if test="@tlmd.Util@isNotEmpty( user_id )">and u.user_id=#{user_id}</if>
 		<if test="@tlmd.Util@isNotEmpty( login_id )">and u.login_id=#{login_id}</if>
 		<if test="@tlmd.Util@isNotEmpty( role_id )">and u.role_id=#{role_id}</if>
-	order by u.reg_dt desc, urm.priority
+	order by u.reg_dt desc, urm.priority, u.login_id
 	limit ${limit} offset ${offset}
 	</select>
 	

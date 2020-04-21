@@ -5,7 +5,7 @@ var tlmd_gfnReloadUrl = function (key, value) {
 
     var baseUrl = [location.protocol, '//', location.host, location.pathname].join(''),
         urlQueryString = document.location.search,
-        newParam = key + '=' + value,
+        newParam = key ? (key + '=' + value) : '',
         params = '?' + newParam;
 
     // If the "search" string exists, then build params from it
