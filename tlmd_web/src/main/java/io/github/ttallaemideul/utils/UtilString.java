@@ -13,47 +13,6 @@ public class UtilString {
 	}
 
 	/**
-	 * 파라미터가 double형 숫자로 파싱이 가능하면 double 변환 된 값을 리턴. 아니면 0을 리턴.
-	 * 
-	 * @param o
-	 * @return 변환된 double형 숫자, 숫자가 아니면 0
-	 */
-	public static double parseDouble(final Object o) {
-		if (isEmpty(o)) {
-			return 0;
-		}
-		final String s = (""+o).trim();
-		double val = 0;
-		try {
-			val = Double.parseDouble(s);
-		} catch (NumberFormatException e) {
-			val = 0;
-		}
-		return val;
-	}
-
-	/**
-	 * 파라미터가 double형 숫자로 파싱이 가능하면 double 변환 된 값을 리턴. 아니면 defaultVal를 리턴.
-	 * 
-	 * @param o
-	 * @param defaultVal 숫자로 변환 불가 시에 리턴되는 값.
-	 * @return 변환된 double형 숫자, 숫자가 아니면 defaultVal
-	 */
-	public static double parseDouble(final Object o, final double defaultVal) {
-		if (isEmpty(o)) {
-			return 0;
-		}
-		final String s = (""+o).trim();
-		double val = 0;
-		try {
-			val = Double.parseDouble(s);
-		} catch (NumberFormatException e) {
-			val = defaultVal;
-		}
-		return val;
-	}
-
-	/**
 	 * 파라미터 객체가 숫자로 변경이 가능한 문자열인지 판단.
 	 * 
 	 * @param o
@@ -121,5 +80,67 @@ public class UtilString {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * 파라미터가 double형 숫자로 파싱이 가능하면 double 변환 된 값을 리턴. 아니면 0을 리턴.
+	 * 
+	 * @param o
+	 * @return 변환된 double형 숫자, 숫자가 아니면 0
+	 */
+	public static double parseDouble(final Object o) {
+		return parseDouble(o, 0);
+	}
+
+	/**
+	 * 파라미터가 double형 숫자로 파싱이 가능하면 double 변환 된 값을 리턴. 아니면 defaultVal를 리턴.
+	 * 
+	 * @param o
+	 * @param defaultVal 숫자로 변환 불가 시에 리턴되는 값.
+	 * @return 변환된 double형 숫자, 숫자가 아니면 defaultVal
+	 */
+	public static double parseDouble(final Object o, final double defaultVal) {
+		if (isEmpty(o)) {
+			return 0;
+		}
+		final String s = (""+o).trim();
+		double val = defaultVal;
+		try {
+			val = Double.parseDouble(s);
+		} catch (NumberFormatException e) {
+			val = defaultVal;
+		}
+		return val;
+	}
+	
+	/**
+	 * 파라미터가 int형 숫자로 파싱이 가능하면 int 변환 된 값을 리턴. 아니면 0을 리턴.
+	 * 
+	 * @param o
+	 * @return 변환된 int형 숫자, 숫자가 아니면 0
+	 */
+	public static int parseInt(final Object o) {
+		return parseInt(o, 0);
+	}
+
+	/**
+	 * 파라미터가 int형 숫자로 파싱이 가능하면 int 변환 된 값을 리턴. 아니면 defaultVal를 리턴.
+	 * 
+	 * @param o
+	 * @param defaultVal 숫자로 변환 불가 시에 리턴되는 값.
+	 * @return 변환된 int형 숫자, 숫자가 아니면 defaultVal
+	 */
+	public static int parseInt(final Object o, final int defaultVal) {
+		if (isEmpty(o)) {
+			return 0;
+		}
+		final String s = (""+o).trim();
+		int val = defaultVal;
+		try {
+			val = Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			val = defaultVal;
+		}
+		return val;
 	}
 }

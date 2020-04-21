@@ -19,7 +19,8 @@
 	<div class="w3-row w3-padding-64">
 	  <div class="w3-container">
 	    <h1>Admin</h1>
-	    <h2>사용자관리</h2>
+	    <h2>사용자관리 <span th:text="|(${totalCount}명)|">00명</span></h2>
+	    <p><a href="javascript:addDummyUser();">더미 사용자 추가</a></p>
 		<div class="w3-responsive">
 			<table class="w3-table-all">
 				<tr>
@@ -50,6 +51,7 @@
 				</tr>
 			</table>
 		</div>
+		<tlmd:paging th:attr="page=${page}, rows=${rows}, total=${totalCount}" />
 	  </div>
 	</div>
 	
@@ -58,6 +60,28 @@
 
 <th:block layout:fragment="script_src">
 <!--/* 페이지의 고유 스크립트 소스(타임리프 처리되면 사라지는 주석)  */-->
+<script type="text/javascript" th:inline="javascript">
+function addDummyUser() {
+$.ajax( /*[[@{/admin/dummyInsert}]]*/ '/#')
+  .done(function(result) {
+    [# th:if="${DEBUG_MODE}"]
+   		console.log('success', result);
+    [/]
+    if(result.status==/*[[${sysProperty.RESULT_OK}]]*/ 200 ) {
+    	alert(result.data.cnt + ' 더미 사용자를 추가했습니다.');
+    	location.reload();
+    } else {
+    	alert('실패하였습니다.');
+    }
+  })
+  .fail(function(result) {
+	[# th:if="${DEBUG_MODE}"]
+		console.log('fail', result);
+	[/]
+	alert('서버와 통신에 실패하였습니다.');
+  })
+}
+</script>
 </th:block>
 
 </body>

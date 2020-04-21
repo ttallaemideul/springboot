@@ -15,6 +15,7 @@ import org.springframework.security.web.header.writers.frameoptions.WhiteListedA
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import io.github.ttallaemideul.auth.AuthProvider;
 import io.github.ttallaemideul.auth.UserDetailService;
 
 @Configuration
@@ -22,9 +23,12 @@ import io.github.ttallaemideul.auth.UserDetailService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
+	private AuthProvider authProvider;
+	
+	@Autowired
 	private UserDetailService userDetailService;
 
-	@Bean
+	@Bean("passwordEncoder")
 	public BCryptPasswordEncoder passwordEncoder() {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		return bCryptPasswordEncoder;
@@ -33,8 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.eraseCredentials(true) //
-			.userDetailsService(userDetailService) //
-			.passwordEncoder(passwordEncoder());
+			.authenticationProvider(authProvider)
+			;
 	}
 
 	@Override
@@ -65,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and().exceptionHandling() //
 				.accessDeniedPage("/auth/access-denied") //
 			.and().rememberMe() //
+				.userDetailsService(userDetailService)
 				.rememberMeParameter("autologin") // 파라미터명
 				.rememberMeCookieName("autologin") // 쿠키명
 				.key("tlmd@github@2020")	// 토크생성 암호화키

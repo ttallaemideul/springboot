@@ -18,25 +18,26 @@ public class ThymeleafController extends BaseController {
 
 	@GetMapping
 	public String main(Model model) {
-		model.addAttribute("serverTime", "<b>"+new Date()+"</b>");
+		model.addAttribute("serverTime", "<b>" + new Date() + "</b>");
 		model.addAttribute("key_x", "from model");
-		if(httpSession != null) {
+		if (httpSession != null) {
 			httpSession.setAttribute("key_x", "from session");
 			httpSession.setAttribute("name", "딸내미들");
 			httpSession.setAttribute("영어이름", "TtalLaeMideul");
 		}
 		model.addAttribute("httpSession", UtilServlet.getSessionInfo(httpSession));
-		if(log.isDebugEnabled()) {
-			log.debug("model={}",model);
+		if (log.isDebugEnabled()) {
+			log.debug("model={}", model);
+			printRequestParams();
 		}
 		return "sample/thymeleaf/main";
 	}
-	
+
 	@GetMapping("/basic_object")
 	public String basicObject(Model model) {
 		return "sample/thymeleaf/basic_object";
 	}
-	
+
 	@GetMapping("/javascript")
 	public String javascript(Model model) {
 		return "sample/thymeleaf/javascript";

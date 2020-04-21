@@ -24,6 +24,7 @@ public class TlmdDialect extends AbstractProcessorDialect {
 	public Set<IProcessor> getProcessors(String dialectPrefix) {
 		final Set<IProcessor> processors = new HashSet<>();
 		processors.add(new OxAttrTagProcessor(dialectPrefix));
+		processors.add(new PagingElementTagProcessor(dialectPrefix));
 		return processors;
 	}
 

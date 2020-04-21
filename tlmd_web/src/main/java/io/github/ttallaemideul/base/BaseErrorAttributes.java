@@ -18,7 +18,7 @@ public class BaseErrorAttributes extends DefaultErrorAttributes {
 	@Override
 	public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
 		Map<String, Object> errorAttributes = super.getErrorAttributes(webRequest, includeStackTrace);
-		errorAttributes.put("timestamp", UtilDate.getTodayFullSSS());
+		errorAttributes.put("timestamp", UtilDate.getNowFullSSS());
 		return errorAttributes;
 	}
 }

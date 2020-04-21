@@ -18,12 +18,19 @@
 	<div class="w3-row w3-padding-64">
 	  <div class="w3-container">
 	    <h1>로그인</h1>
-	    <p th:if="${param.error}" class="error">Wrong user or password</p>
+	    <div th:switch="${error}">
+	    	<p>로그인에 실패하였습니다. </p>
+	    	<p th:case="${sysProperty.AUTH_ERROR_ACCOUNTDISABLED } ">계정이 비활성 상태입니다. 계정 활성화 후에 다시 시도하세요.</p>
+	    	<p th:case="${sysProperty.AUTH_ERROR_ACCOUNTEXPIRED } ">계정의 유효기간이 만료되었습니다.</p>
+	    	<p th:case="${sysProperty.AUTH_ERROR_ACCOUNTLOCKED } ">사용제한된 계정입니다.</p>
+	    	<p th:case="${sysProperty.AUTH_ERROR_CREDENTIALSEXPIRED } ">비밀번호의 유효기간이 만료되었습니다.</p>
+	    	<p th:case="*">로그인ID/비밀번호가 일치하지 않습니다.</p>
+	    </div>
 	    <p th:if="${param.logout}" class="info">로그아웃 되었습니다!</p>
 	    <form th:action="@{/auth/login}" method="post">
-	      <label for="login_id">Username</label>:
+	      <label for="login_id">로그인ID</label>:
 	      <input type="text" id="login_id" name="login_id" autofocus="autofocus" /> <br />
-	      <label for="pwd">Password</label>:
+	      <label for="pwd">비밀번호</label>:
 	      <input type="password" id="pwd" name="pwd" /> <br />
 	      <label for="autologin">자동로그인(2주간 유지)</label>:
 	      <input type="checkbox" id="autologin" name="autologin" /> <br />

@@ -7,10 +7,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import io.github.ttallaemideul.auth.model.UserDetail;
-import lombok.extern.slf4j.Slf4j;
+import io.github.ttallaemideul.config.SysProperty;
 import tlmd.Util;
 
-@Slf4j
 @Service
 public class UserDetailService implements UserDetailsService {
 
@@ -21,8 +20,7 @@ public class UserDetailService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDetail ud = userDetailMapperH2.loadUserByUsername(username);
 		if (Util.isEmpty(ud))
-			throw new UsernameNotFoundException("Invalid user!");
-		log.debug("ud={}", ud);
+			throw new UsernameNotFoundException(SysProperty.AUTH_ERROR_USERNOTFOUND);
 		return ud;
 	}
 

@@ -28,6 +28,16 @@
 		<result property="priority" column="priority"/>
 	</resultMap>
 	
+	<select id="getUserListCount" resultType="int">
+		select 
+			count(1)
+		from user u
+		where 1=1
+			<if test="@tlmd.Util@isNotEmpty( user_id )">and u.user_id=#{user_id}</if>
+			<if test="@tlmd.Util@isNotEmpty( login_id )">and u.login_id=#{login_id}</if>
+			<if test="@tlmd.Util@isNotEmpty( role_id )">and u.role_id=#{role_id}</if>
+	</select>
+	
 	<select id="getUserList" resultMap="userDetailMap">
 	select
 		u.user_id
@@ -44,13 +54,35 @@
 		, urm.role
 		, urm.role_desc
 		, urm.priority
-	from user u join user_role ur using(user_id)
-		join user_role_mng urm on ur.role_id=urm.role_id
-	<where>
-	<if test="@tlmd.Util@isNotEmpty(user_id)">and u.user_id=#{user_id}</if>
-	<if test="@tlmd.Util@isNotEmpty(login_id)">and u.login_id=#{login_id}</if>
-	</where>
+	from user u join user_role ur using(user_id) join user_role_mng urm on ur.role_id=urm.role_id
+	where 1=1
+		<if test="@tlmd.Util@isNotEmpty( user_id )">and u.user_id=#{user_id}</if>
+		<if test="@tlmd.Util@isNotEmpty( login_id )">and u.login_id=#{login_id}</if>
+		<if test="@tlmd.Util@isNotEmpty( role_id )">and u.role_id=#{role_id}</if>
 	order by u.reg_dt desc, urm.priority
+	limit ${limit} offset ${offset}
 	</select>
+	
+	<insert id="insertUserDto" useGeneratedKeys="true" keyProperty="id" keyColumn="user_id"  parameterType="io.github.ttallaemideul.service.user.UserDto">
+		insert into user (
+			active_yn
+			, login_id
+			, user_name
+			, pwd
+		) values
+		(
+			#{active_yn}
+			, #{login_id}
+			, #{user_name}
+			, #{pwd}
+		)
+	</insert>
+	
+	<insert id="insertUserRoleDto">
+		insert into user_role (user_id, role_id) values
+		(#{user_id}
+		, (select role_id from user_role_mng where role=#{role})
+		)
+	</insert>
 	
 </mapper>

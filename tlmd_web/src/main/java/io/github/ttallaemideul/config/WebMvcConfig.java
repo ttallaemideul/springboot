@@ -1,7 +1,15 @@
 package io.github.ttallaemideul.config;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
@@ -10,12 +18,48 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.navercorp.lucy.security.xss.servletfilter.XssEscapeServletFilter;
+
 import io.github.ttallaemideul.sample.thymeleaf.HelloDialect;
 import io.github.ttallaemideul.thymeleaf.TlmdDialect;
+import lombok.extern.slf4j.Slf4j;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
+@Slf4j
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+
+	@Autowired
+	private SysProperty sysProperty;
+	
+	@Autowired
+	private Environment environment;
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		if(log.isDebugEnabled()) {
+			log.debug("environment={}", environment);
+		}
+		// 프로파일을 읽어와서 서버 모드를 설정한다.
+		// 인터셉터에서 sysProperty를 사용해야 함으로 인터셉터 추가 전에 설정한다.
+		sysProperty.setServerMode(SysProperty.SERVER_MODE_LOCAL);
+		String[] profiles = environment.getActiveProfiles();
+		for (String profile : profiles) {
+			switch (profile.toUpperCase()) {
+			case SysProperty.SERVER_MODE_PRD:
+				sysProperty.setServerMode(SysProperty.SERVER_MODE_PRD);
+				break;
+			case SysProperty.SERVER_MODE_STG:
+				sysProperty.setServerMode(SysProperty.SERVER_MODE_STG);
+				break;
+			case SysProperty.SERVER_MODE_DEV:
+				sysProperty.setServerMode(SysProperty.SERVER_MODE_DEV);
+				break;
+			}
+		}
+		WebMvcConfigurer.super.addInterceptors(registry);
+	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -27,6 +71,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 	/**
 	 * 타임리프 속성 생성
+	 * 
 	 * @return
 	 */
 	@Bean
@@ -44,6 +89,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 	/**
 	 * 타임리프 dialect 추가
+	 * 
 	 * @return
 	 */
 	@Bean
@@ -51,14 +97,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
 		templateEngine.setEnableSpringELCompiler(true); // Compiled SpringEL should speed up executions
 		templateEngine.setTemplateResolver(templateResolver());
-		templateEngine.addDialect(new LayoutDialect());	// 레이아웃 관리
-		templateEngine.addDialect(new SpringSecurityDialect());	// 스프링 시큐리티 dialect
+		templateEngine.addDialect(new LayoutDialect()); // 레이아웃 관리
+		templateEngine.addDialect(new SpringSecurityDialect()); // 스프링 시큐리티 dialect
 		templateEngine.addDialect(new HelloDialect()); // 샘플 dialect
 		templateEngine.addDialect(new TlmdDialect()); // tlmd dialect
 		return templateEngine;
 	}
-	
-	
+
 	@Bean
 	public ThymeleafViewResolver viewResolver() {
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
@@ -67,4 +112,41 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		viewResolver.setOrder(0);
 		return viewResolver;
 	}
+
+	@Override
+	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+		converters.add(escapingConverter());
+
+	}
+
+	/**
+	 * request body xss 적용
+	 * 
+	 * @return
+	 */
+	@Bean
+	public HttpMessageConverter<?> escapingConverter() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.getFactory().setCharacterEscapes(new HTMLCharacterEscapes());
+
+		MappingJackson2HttpMessageConverter escapingConverter = new MappingJackson2HttpMessageConverter();
+		escapingConverter.setObjectMapper(objectMapper);
+
+		return escapingConverter;
+	}
+
+	/**
+	 * XSS 필터 적용
+	 * 
+	 * @return
+	 */
+	@Bean
+	public FilterRegistrationBean<XssEscapeServletFilter> getXssEscapeServletFilterRegistrationBean() {
+		FilterRegistrationBean<XssEscapeServletFilter> registrationBean = new FilterRegistrationBean<XssEscapeServletFilter>();
+		registrationBean.setFilter(new XssEscapeServletFilter());
+		registrationBean.setOrder(1);
+		registrationBean.addUrlPatterns("/*"); // filter를 거칠 url patterns
+		return registrationBean;
+	}
+
 }
